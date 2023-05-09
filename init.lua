@@ -3,4 +3,4 @@ require('plugins')
 require('mappings')
 
 -- Set theme
-vim.cmd('colorscheme sonokai')
+vim.cmd('colorscheme hardhacker')

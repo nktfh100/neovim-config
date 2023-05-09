@@ -17,7 +17,8 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- Theme
-    use 'sainnhe/sonokai'
+    -- use 'sainnhe/sonokai'
+    use 'hardhackerlabs/theme-vim'
 
     -- Time tracking
     use 'wakatime/vim-wakatime'
