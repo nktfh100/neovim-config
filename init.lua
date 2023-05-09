@@ -1,6 +1,6 @@
-require('settings')
-require('plugins')
-require('mappings')
+require("settings")
+require("plugins")
+require("mappings")
 
 -- Set theme
-vim.cmd('colorscheme hardhacker')
+vim.cmd("colorscheme hardhacker")
