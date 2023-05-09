@@ -151,13 +151,15 @@ end
 
 require('nvim-tree').setup({ on_attach = onAttach })
 
-map("n", "<leader>xx", "<cmd>TobleToggle<CR>", opts('Trouble Toggle'))
+-- Trouble
+map("n", "<leader>xx", "<cmd>TroubleToggle<CR>", opts('Trouble Toggle'))
 map("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<CR>", opts('Trouble Workspace Diagnostics'))
 map("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<CR>", opts('Trouble Document Diagnostics'))
 map("n", "<leader>xl", "<cmd>TroubleToggle loclist<CR>", opts('Trouble Loclist'))
 map("n", "<leader>xq", "<cmd>TroubleToggle quickfix<CR>", opts('Trouble Quick Fix'))
 map("n", "gR", "<cmd>TroubleToggle lsp_references<CR>", opts('Trouble LSP References'))
 
+-- Search box
 map('n', '<leader>ss', ':SearchBoxMatchAll<CR>', opts('Search: Match All'))
 map('n', '<leader>sr', ':SearchBoxReplace<CR>', opts('Search: Replace'))
 map('n', '<leader>se', ':SearchBoxIncSearch<CR>', opts('Search: Incremental'))
