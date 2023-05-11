@@ -118,6 +118,7 @@ return require("packer").startup(function(use)
 				end,
 			},
 			{ "williamboman/mason-lspconfig.nvim" },
+			{ "jose-elias-alvarez/null-ls.nvim" },
 
 			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" },
