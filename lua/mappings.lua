@@ -167,7 +167,8 @@ map("n", "<leader>sr", ":SearchBoxReplace<CR>", opts("Search: Replace"))
 map("n", "<leader>se", ":SearchBoxIncSearch<CR>", opts("Search: Incremental"))
 
 -- Completions
-require("cmp").setup({
+local cmp = require("cmp")
+cmp.setup({
     mapping = {
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
     },

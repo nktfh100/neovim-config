@@ -23,7 +23,6 @@ require("mason-null-ls").setup({
         "marksman",
         "eslint",
         "css-lsp",
-        "isort",
         "docker-compose-language-service",
         "dockerfile-language-server",
         "yaml-language-server",
