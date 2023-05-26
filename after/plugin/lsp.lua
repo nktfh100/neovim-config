@@ -16,7 +16,6 @@ require("mason").setup()
 require("mason-null-ls").setup({
     ensure_installed = {
         "stylua",
-        "rome",
         "black",
         "gopls",
         "lua-language-server",
@@ -29,6 +28,8 @@ require("mason-null-ls").setup({
         "pyright",
         "python-lsp-server",
         "cspell",
+        "prettier",
+        "typescript-language-server"
     },
     automatic_installation = true,
     handlers = {},

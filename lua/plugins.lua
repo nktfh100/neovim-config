@@ -35,9 +35,6 @@ return require("packer").startup(function(use)
     -- Syntax highlighting
     use({
         "nvim-treesitter/nvim-treesitter",
-        requires = {
-            "HiPhish/nvim-ts-rainbow2",
-        },
         run = function()
             local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
             ts_update()
@@ -85,12 +82,12 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use({
-        "terrortylor/nvim-comment",
+    use {
+        'numToStr/Comment.nvim',
         config = function()
-            require("nvim_comment").setup()
-        end,
-    })
+            require('Comment').setup()
+        end
+    }
 
     use({
         "antosha417/nvim-lsp-file-operations",

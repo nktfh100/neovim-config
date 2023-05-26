@@ -12,6 +12,18 @@ map("n", "<C-s>", ":update<CR>", opts("Save File"))
 
 map("n", "x", '"_x', opts("Delete Char Without Yanking"))
 
+map("n", "gq", vim.lsp.buf.format, opts("Format File"))
+
+map("n", "<leader>b", ":bp<CR>", opts("Previous Buffer"))
+
+map("n", "<leader>w", ":w<CR>", opts("Write Buffer"))
+
+map("n", "<leader>q", ":q<CR>", opts("Quit Buffer"))
+
+map("n", "<leader><leader>", ":b#<CR>", opts("Toggle Between Current And Last Edited Buffer"))
+
+map("n", "<leader>t", ":terminal<CR>", opts("Terminal"))
+
 -- Move lines and blocks per move plugin
 map("n", "<A-j>", ":MoveLine(1)<CR>", opts("Move Line Down"))
 map("v", "<A-j>", ":MoveBlock(1)<CR>", opts("Move Block Down"))
@@ -26,8 +38,6 @@ map("n", "<A-h>", ":MoveHChar(-1)<CR>", opts("Move Line Left"))
 map("v", "<A-h>", ":MoveHBlock(-1)<CR>", opts("Move Block Left"))
 
 map("n", "<leader>a", ":NvimTreeToggle<CR>", opts("Toggle Nvim Tree"))
-
-map("n", "<leader>t", ":terminal<CR>", opts("Terminal"))
 
 -- Move between splits
 map("n", "<leader>h", "<C-w>h", opts("Move To The Left Window"))
@@ -173,6 +183,3 @@ cmp.setup({
         ["<CR>"] = cmp.mapping.confirm({ select = false }),
     },
 })
-
--- Format file
-map("n", "gq", vim.lsp.buf.format, opts("Format File"))
