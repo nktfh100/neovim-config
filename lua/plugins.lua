@@ -1,159 +1,148 @@
 local vim = vim
 
 local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-        vim.cmd([[packadd packer.nvim]])
-        return true
-    end
-    return false
+	local fn = vim.fn
+	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
+		vim.cmd([[packadd packer.nvim]])
+		return true
+	end
+	return false
 end
 
 local packer_bootstrap = ensure_packer()
 
 return require("packer").startup(function(use)
-    use("wbthomason/packer.nvim")
+	use("wbthomason/packer.nvim")
 
-    -- Theme
-    -- use 'sainnhe/sonokai'
-    use("hardhackerlabs/theme-vim")
+	-- Theme
+	-- use 'sainnhe/sonokai'
+	use("hardhackerlabs/theme-vim")
 
-    -- Time tracking
-    use("wakatime/vim-wakatime")
+	use("nvim-tree/nvim-web-devicons")
+	use("nvim-lua/plenary.nvim")
 
-    use("nvim-tree/nvim-web-devicons")
+	-- Time tracking
+	use("wakatime/vim-wakatime")
 
-    use({
-        "folke/which-key.nvim",
-        config = function()
-            require("which-key").setup({})
-        end,
-    })
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup({})
+		end,
+	})
 
-    -- Syntax highlighting
-    use({
-        "nvim-treesitter/nvim-treesitter",
-        run = function()
-            local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-            ts_update()
-        end,
-    })
+	-- File explorer
+	use("nvim-tree/nvim-tree.lua")
 
-    -- File explorer
-    use({
-        "nvim-tree/nvim-tree.lua",
-        requires = {
-            "nvim-tree/nvim-web-devicons",
-        },
-    })
+	use({
+		"folke/trouble.nvim",
+		config = function()
+			require("trouble").setup({})
+		end,
+	})
 
-    use({
-        "folke/trouble.nvim",
-        requires = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("trouble").setup({})
-        end,
-    })
+	-- Fuzzy finder
+	use({
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.1",
+	})
 
-    -- Fuzzy finder
-    use({
-        "nvim-telescope/telescope.nvim",
-        tag = "0.1.1",
-        requires = {
-            { "nvim-lua/plenary.nvim" },
-        },
-    })
+	use({
+		"nvim-lualine/lualine.nvim",
+		config = function()
+			require("lualine").setup({})
+		end,
+	})
 
-    use({
-        "nvim-lualine/lualine.nvim",
-        requires = { "nvim-tree/nvim-web-devicons", opt = true },
-        config = function()
-            require("lualine").setup()
-        end,
-    })
+	use({
+		"phaazon/hop.nvim",
+		branch = "v2",
+		config = function()
+			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+		end,
+	})
 
-    use({
-        "phaazon/hop.nvim",
-        branch = "v2",
-        config = function()
-            require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-        end,
-    })
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+		requires = {
+			"JoosepAlviste/nvim-ts-context-commentstring",
+		},
+	})
 
-    use {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end
-    }
+	-- Greeter
+	use("goolord/alpha-nvim")
 
-    use({
-        "antosha417/nvim-lsp-file-operations",
-        requires = {
-            { "nvim-lua/plenary.nvim" },
-        },
-    })
+	-- Syntax highlighting
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		run = function()
+			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+			ts_update()
+		end,
+	})
 
-    -- Greeter
-    use({
-        "goolord/alpha-nvim",
-        requires = { "nvim-tree/nvim-web-devicons" },
-    })
+	-- Completion
+	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
+	use("hrsh7th/cmp-nvim-lsp") -- nvim-cmp source for neovim's built-in LSP
+	use("FelipeLema/cmp-async-path") --  nvim-cmp source for path (async)
+	use("hrsh7th/cmp-cmdline") --  nvim-cmp source for vim's cmdline
+	use("hrsh7th/cmp-nvim-lua") --  nvim-cmp source for nvim lua
+	use("L3MON4D3/LuaSnip") -- Snippet Engine
+	use("hrsh7th/nvim-cmp")
 
-    use({
-        "VonHeikemen/lsp-zero.nvim",
-        branch = "v2.x",
-        requires = {
-            -- LSP Support
-            {
-                "williamboman/mason.nvim",
-                run = function()
-                    pcall(vim.cmd, "MasonUpdate")
-                end,
-            },
-            { "neovim/nvim-lspconfig" },
-            { "williamboman/mason-lspconfig.nvim" },
+	-- Emmet
+	use({ "mattn/emmet-vim" })
+	use({ "dcampos/cmp-emmet-vim" })
 
-            -- Autocompletion
-            { "hrsh7th/nvim-cmp" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "L3MON4D3/LuaSnip" },
-        },
-    })
+	-- LSP
+	use("jose-elias-alvarez/null-ls.nvim")
+	use({
+		"williamboman/mason.nvim",
+		run = function()
+			pcall(vim.cmd, "MasonUpdate")
+		end,
+	})
+	use("williamboman/mason-lspconfig.nvim")
+	use("jay-babu/mason-null-ls.nvim")
 
-    use({
-        "jay-babu/mason-null-ls.nvim",
-        -- event = { "BufReadPre", "BufNewFile" },
-        requires = {
-            { "williamboman/mason.nvim" },
-            { "jose-elias-alvarez/null-ls.nvim" },
-        },
-    })
+	use("neovim/nvim-lspconfig")
 
-    use({
-        "VonHeikemen/searchbox.nvim",
-        requires = {
-            { "MunifTanjim/nui.nvim" },
-        },
-    })
+	use("windwp/nvim-ts-autotag")
+	use({
+		"windwp/nvim-autopairs",
+		config = function()
+			require("nvim-autopairs").setup({})
+		end,
+	})
 
-    use("mbbill/undotree")
+	-- Easy Search
+	use({
+		"VonHeikemen/searchbox.nvim",
+		requires = {
+			{ "MunifTanjim/nui.nvim" },
+		},
+	})
 
-    -- Easily move lines
-    use("fedepujol/move.nvim")
+	use("mbbill/undotree")
 
-    -- Closes brackets
-    use("rstacruz/vim-closer")
+	-- Easily move lines
+	use("fedepujol/move.nvim")
 
-    -- Preview colors
-    use("ap/vim-css-color")
+	-- Closes brackets
+	use("rstacruz/vim-closer")
 
-    -- Adds indentation guides
-    use("lukas-reineke/indent-blankline.nvim")
+	-- Preview colors
+	use("ap/vim-css-color")
 
-    if packer_bootstrap then
-        require("packer").sync()
-    end
+	-- Adds indentation guides
+	use("lukas-reineke/indent-blankline.nvim")
+
+	if packer_bootstrap then
+		require("packer").sync()
+	end
 end)
