@@ -142,6 +142,8 @@ return require("packer").startup(function(use)
 	-- Adds indentation guides
 	use("lukas-reineke/indent-blankline.nvim")
 
+	use("rcarriga/nvim-notify")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end

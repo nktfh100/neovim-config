@@ -26,7 +26,7 @@ local enable_format_on_save = function(_, bufnr)
 end
 
 local lspconfig = require("lspconfig")
-local mappings = require("lua.mappings")
+local mappings = require("mappings")
 
 local on_attach_save = function(client, bufnr)
 	mappings.lsp_on_attach(client, bufnr)

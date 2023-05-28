@@ -53,11 +53,21 @@ map("v", "p", '"_dP', opts("Paste Without Yanking")) -- Paste over currently sel
 map("n", "<C-p>", ":pu<CR>", opts("Paste In Next Line"))
 
 -- Telescope (Search)
-map("n", "<leader>ff", ":Telescope find_files<CR>", opts("Telescope Find Files"))
-map("n", "<leader>fg", ":Telescope live_grep<CR>", opts("Telescope Grep"))
-map("n", "<leader>fb", ":Telescope buffers<CR>", opts("Telescope Buffers"))
-map("n", "<leader>fh", ":Telescope help_tags<CR>", opts("Telescope Help"))
-map("n", "<leader>fe", ":Telescope current_buffer_fuzzy_find<CR>", opts("Telescope Fuzzy Find In Current Buffer"))
+
+-- Open telescope with layout based on the window width
+local function open_telescope(type)
+	local layout = "vertical"
+	if vim.fn.winwidth("%") >= 200 then
+		layout = "horizontal"
+	end
+	return ":lua require('telescope.builtin')." .. type .. "({layout_strategy='" .. layout .. "'})<CR>"
+end
+
+map("n", "<leader>ff", open_telescope("find_files"), opts("Telescope Find Files"))
+map("n", "<leader>fg", open_telescope("live_grep"), opts("Telescope Grep"))
+map("n", "<leader>fb", open_telescope("buffers"), opts("Telescope Buffers"))
+map("n", "<leader>fh", open_telescope("help_tags"), opts("Telescope Help"))
+map("n", "<leader>fe", open_telescope("current_buffer_fuzzy_find"), opts("Telescope Fuzzy Find In Current Buffer"))
 
 -- Hop
 map("n", "f", ':lua require("hop").hint_char1()<CR>', opts("Hop"))
@@ -81,13 +91,11 @@ map("n", "<leader>se", ":SearchBoxIncSearch<CR>", opts("Search: Incremental"))
 
 -- Remove a single tab from current line
 map("n", "<S-TAB>", function()
-	-- Get the current line
 	local line = vim.api.nvim_get_current_line()
 
 	-- Remove a tab character (\t) from the line
 	local updated_line = string.gsub(line, "\t", "", 1)
 
-	-- Update the current line with the modified version
 	vim.api.nvim_set_current_line(updated_line)
 end, opts("Remove Tab"))
 
