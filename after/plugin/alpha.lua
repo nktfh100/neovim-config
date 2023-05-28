@@ -1,10 +1,11 @@
 local alphaDashboard = require("alpha.themes.dashboard")
+local utils = require("utils")
 
 alphaDashboard.section.buttons.val = {
-	alphaDashboard.button("f", "󰈞  Find file", ":Telescope find_files <CR>"),
+	alphaDashboard.button("f", "󰈞  Find file", utils.open_telescope("find_files")),
 	alphaDashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-	alphaDashboard.button("r", "󰷊  Recently used files", ":Telescope oldfiles <CR>"),
-	alphaDashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
+	alphaDashboard.button("r", "󰷊  Recently used files", utils.open_telescope("oldfiles")),
+	alphaDashboard.button("t", "  Find text", utils.open_telescope("live_grep")),
 	alphaDashboard.button("q", "󰩈  Quit Neovim", ":qa<CR>"),
 }
 

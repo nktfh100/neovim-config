@@ -1,10 +1,10 @@
 local M = {}
 
+local utils = require("utils")
+
 local map = vim.keymap.set
 
-local function opts(desc)
-	return { desc = desc, noremap = true, silent = true, nowait = true }
-end
+local opts = utils.opts
 
 vim.g.mapleader = " " -- map leader to space
 
@@ -53,21 +53,16 @@ map("v", "p", '"_dP', opts("Paste Without Yanking")) -- Paste over currently sel
 map("n", "<C-p>", ":pu<CR>", opts("Paste In Next Line"))
 
 -- Telescope (Search)
-
--- Open telescope with layout based on the window width
-local function open_telescope(type)
-	local layout = "vertical"
-	if vim.fn.winwidth("%") >= 200 then
-		layout = "horizontal"
-	end
-	return ":lua require('telescope.builtin')." .. type .. "({layout_strategy='" .. layout .. "'})<CR>"
-end
-
-map("n", "<leader>ff", open_telescope("find_files"), opts("Telescope Find Files"))
-map("n", "<leader>fg", open_telescope("live_grep"), opts("Telescope Grep"))
-map("n", "<leader>fb", open_telescope("buffers"), opts("Telescope Buffers"))
-map("n", "<leader>fh", open_telescope("help_tags"), opts("Telescope Help"))
-map("n", "<leader>fe", open_telescope("current_buffer_fuzzy_find"), opts("Telescope Fuzzy Find In Current Buffer"))
+map("n", "<leader>ff", utils.open_telescope("find_files"), opts("Telescope Find Files"))
+map("n", "<leader>fg", utils.open_telescope("live_grep"), opts("Telescope Grep"))
+map("n", "<leader>fb", utils.open_telescope("buffers"), opts("Telescope Buffers"))
+map("n", "<leader>fh", utils.open_telescope("help_tags"), opts("Telescope Help"))
+map(
+	"n",
+	"<leader>fe",
+	utils.open_telescope("current_buffer_fuzzy_find"),
+	opts("Telescope Fuzzy Find In Current Buffer")
+)
 
 -- Hop
 map("n", "f", ':lua require("hop").hint_char1()<CR>', opts("Hop"))
@@ -89,15 +84,7 @@ map("n", "<leader>ss", ":SearchBoxMatchAll<CR>", opts("Search: Match All"))
 map("n", "<leader>sr", ":SearchBoxReplace<CR>", opts("Search: Replace"))
 map("n", "<leader>se", ":SearchBoxIncSearch<CR>", opts("Search: Incremental"))
 
--- Remove a single tab from current line
-map("n", "<S-TAB>", function()
-	local line = vim.api.nvim_get_current_line()
-
-	-- Remove a tab character (\t) from the line
-	local updated_line = string.gsub(line, "\t", "", 1)
-
-	vim.api.nvim_set_current_line(updated_line)
-end, opts("Remove Tab"))
+map("n", "<S-TAB>", utils.remove_tab, opts("Remove Tab"))
 
 -- Nvim tree
 M.nvim_tree_on_attach = function(bufnr)
@@ -107,35 +94,10 @@ M.nvim_tree_on_attach = function(bufnr)
 		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
 	end
 
-	-- Function to open file and close nvim tree
-	local function open_or_edit(edit_type)
-		return function()
-			local node = api.tree.get_node_under_cursor()
-
-			local open_func
-			if edit_type == "normal" then
-				open_func = api.node.open.edit
-			elseif edit_type == "vertical" then
-				open_func = api.node.open.vertical
-			elseif edit_type == "horizontal" then
-				open_func = api.node.open.horizontal
-			elseif edit_type == "tab" then
-				open_func = api.node.open.tab
-			end
-
-			if node.nodes ~= nil then
-				open_func() -- expand or collapse folder
-			else
-				open_func()
-				api.tree.close()
-			end
-		end
-	end
-
-	map("n", "l", open_or_edit("normal"), opts_("Edit Or Open"))
-	map("n", "<C-t>", open_or_edit("tab"), opts_("Open: New Tab"))
-	map("n", "<C-v>", open_or_edit("vertical"), opts_("Open: Vertical Split"))
-	map("n", "<C-x>", open_or_edit("horizontal"), opts_("Open: Horizontal Split"))
+	map("n", "l", utils.open_or_edit(api, "normal"), opts_("Edit Or Open"))
+	map("n", "<C-t>", utils.open_or_edit(api, "tab"), opts_("Open: New Tab"))
+	map("n", "<C-v>", utils.open_or_edit(api, "vertical"), opts_("Open: Vertical Split"))
+	map("n", "<C-x>", utils.open_or_edit(api, "horizontal"), opts_("Open: Horizontal Split"))
 
 	map("n", "<Tab>", api.node.open.preview, opts_("Open Preview"))
 	map("n", "C", api.tree.change_root_to_node, opts_("CD"))
@@ -168,7 +130,6 @@ M.lsp_on_attach = function(_, bufnr)
 		vim.api.nvim_buf_set_keymap(bufnr, ...)
 	end
 
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	buf_set_keymap("n", "gD", ":lua vim.lsp.buf.declaration()<CR>", opts("Go To Declaration"))
 	buf_set_keymap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts("Go To Definition"))
 	buf_set_keymap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts("Go To Implementation"))
