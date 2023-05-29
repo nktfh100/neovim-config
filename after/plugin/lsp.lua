@@ -7,7 +7,7 @@ require("mason-lspconfig").setup({
 		"jsonls",
 		"cssls",
 		"marksman",
-		"pyright",
+		"pylsp",
 		"yamlls",
 	},
 	automatic_installation = true,
@@ -60,7 +60,7 @@ lspconfig.tsserver.setup({
 	capabilities = capabilities,
 })
 
-lspconfig.pyright.setup({
+lspconfig.pylsp.setup({
 	on_attach = mappings.lsp_on_attach,
 	capabilities = capabilities,
 })
