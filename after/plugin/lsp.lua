@@ -63,6 +63,15 @@ lspconfig.tsserver.setup({
 lspconfig.pylsp.setup({
 	on_attach = mappings.lsp_on_attach,
 	capabilities = capabilities,
+	settings = {
+		pylsp = {
+			plugins = {
+				pycodestyle = {
+					ignore = { "E501" },
+				},
+			},
+		},
+	},
 })
 
 lspconfig.cssls.setup({

@@ -17,7 +17,7 @@ return require("packer").startup(function(use)
 	use("wbthomason/packer.nvim")
 
 	-- Theme
-	-- use 'sainnhe/sonokai'
+	-- use("sainnhe/sonokai")
 	use("hardhackerlabs/theme-vim")
 
 	use("nvim-tree/nvim-web-devicons")
@@ -142,7 +142,12 @@ return require("packer").startup(function(use)
 	-- Adds indentation guides
 	use("lukas-reineke/indent-blankline.nvim")
 
-	use("rcarriga/nvim-notify")
+	use({
+		"rcarriga/nvim-notify",
+		config = function()
+			vim.notify = require("notify")
+		end,
+	})
 
 	if packer_bootstrap then
 		require("packer").sync()
