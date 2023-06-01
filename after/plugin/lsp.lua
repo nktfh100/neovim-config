@@ -56,12 +56,12 @@ lspconfig.lua_ls.setup({
 })
 
 lspconfig.tsserver.setup({
-	on_attach = mappings.lsp_on_attach,
+	on_attach = on_attach_save,
 	capabilities = capabilities,
 })
 
 lspconfig.pylsp.setup({
-	on_attach = mappings.lsp_on_attach,
+	on_attach = on_attach_save,
 	capabilities = capabilities,
 	settings = {
 		pylsp = {
@@ -75,6 +75,6 @@ lspconfig.pylsp.setup({
 })
 
 lspconfig.cssls.setup({
-	on_attach = mappings.lsp_on_attach,
+	on_attach = on_attach_save,
 	capabilities = capabilities,
 })
