@@ -78,3 +78,8 @@ lspconfig.cssls.setup({
 	on_attach = on_attach_save,
 	capabilities = capabilities,
 })
+
+lspconfig.jsonls.setup({
+	on_attach = on_attach_save,
+	capabilities = capabilities,
+})
