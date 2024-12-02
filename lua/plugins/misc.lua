@@ -181,6 +181,9 @@ return {
 			editing_text = function(fileName)
 				-- Only keep file extension
 				FileExt = fileName:match("^.+(%..+)$")
+				if FileExt == nil then
+					return ""
+				end
 				FileExtWithoutDot = FileExt:sub(2)
 				return string.format("Editing a %s file", FileExtWithoutDot)
 			end,
