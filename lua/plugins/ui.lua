@@ -251,4 +251,9 @@ return {
 			end
 		end,
 	},
+	--  Display vim motions
+	{
+		"tris203/precognition.nvim",
+		opts = {},
+	},
 }
