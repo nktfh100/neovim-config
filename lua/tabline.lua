@@ -23,8 +23,13 @@ function CustomTabline()
 		local bufname = fn.bufname(buflist[winnr])
 
 		if bufname ~= "" then
-			local parent_dir = fn.fnamemodify(bufname, ":h:t") -- Get parent folder
-			bufname = parent_dir .. "/" .. fn.fnamemodify(bufname, ":t") -- Parent + file name
+			local parent_dir = fn.fnamemodify(bufname, ":h:t")
+			local working_dir = fn.fnamemodify(fn.getcwd(), ":t")
+			bufname = fn.fnamemodify(bufname, ":t") -- File name
+			if parent_dir ~= working_dir then
+				-- Do not display the working directory if its in the current project root
+				bufname = parent_dir .. "/" .. bufname
+			end
 		else
 			bufname = "[No Name]"
 		end
