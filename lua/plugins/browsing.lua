@@ -67,6 +67,13 @@ return {
 				desc = "Grep current selection",
 				mode = { "x", "v" },
 			},
+			{
+				"<leader>fr",
+				function()
+					require("telescope.builtin").resume()
+				end,
+				desc = "Resume last search",
+			},
 		},
 		config = function()
 			local telescope = require("telescope")

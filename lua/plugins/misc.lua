@@ -95,7 +95,7 @@ return {
 		dependencies = { "MunifTanjim/nui.nvim" },
 		keys = {
 			{
-				"<leader>fr",
+				"<leader>rr",
 				function()
 					require("searchbox").replace()
 				end,
