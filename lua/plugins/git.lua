@@ -21,7 +21,6 @@ return {
 			-- },
 		},
 	},
-	-- Git utilities, gutter signs
 	-- Git commands
 	{
 		"tpope/vim-fugitive",
