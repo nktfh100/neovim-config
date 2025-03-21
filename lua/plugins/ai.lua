@@ -75,7 +75,7 @@ return {
 				model = "claude-3.7-sonnet-thought",
 			},
 			behaviour = {
-				auto_apply_diff_after_generation = true,
+				auto_apply_diff_after_generation = false,
 				enable_cursor_planning_mode = true,
 			},
 		},
