@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 -- prefil edit window with common scenarios to avoid repeating query and submit immediately
 local prefill_edit_window = function(request)
 	require("avante.api").edit()
@@ -77,6 +79,10 @@ return {
 				enable_cursor_planning_mode = true,
 			},
 		},
+		init = function()
+			utils.map({ "<leader>az", group = "avante: ask (templates)", icon = "󰅩", mode = "n" })
+			utils.map({ "<leader>az", group = "avante: edit (templates)", icon = "󰅩", mode = "v" })
+		end,
 		keys = {
 			{
 				"<leader>ao",

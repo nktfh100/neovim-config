@@ -1,6 +1,8 @@
 local opt = vim.opt
 local g = vim.g
 
+vim.opt.laststatus = 3
+
 vim.opt.termguicolors = true
 
 -- Disable netrw (default file explorer) and its plugins
