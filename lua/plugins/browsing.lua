@@ -174,7 +174,7 @@ return {
 		end,
 		keys = {
 			{
-				"<leader>a",
+				"<leader>e",
 				function()
 					require("tiny-code-action").code_action()
 				end,
