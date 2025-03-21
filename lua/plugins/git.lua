@@ -22,57 +22,6 @@ return {
 		},
 	},
 	-- Git utilities, gutter signs
-	{
-		"lewis6991/gitsigns.nvim",
-		event = "BufRead",
-		keys = {
-			{
-				"<leader>gs",
-				function()
-					require("gitsigns").stage_hunk()
-				end,
-				desc = "Stage hunk",
-			},
-			{
-				"<leader>gu",
-				function()
-					require("gitsigns").undo_stage_hunk()
-				end,
-				desc = 'Undo "stage hunk"',
-			},
-			{
-				"<leader>gr",
-				function()
-					require("gitsigns").reset_hunk()
-				end,
-				desc = "Reset hunk",
-			},
-			{
-				"<leader>gn",
-				function()
-					require("gitsigns").next_hunk()
-				end,
-				desc = "Next hunk",
-			},
-			{
-				"<leader>gN",
-				function()
-					require("gitsigns").prev_hunk()
-				end,
-				desc = "Previous hunk",
-			},
-			{
-				"<leader>gp",
-				function()
-					require("gitsigns").preview_hunk_inline()
-				end,
-				desc = "Preview hunk",
-			},
-		},
-		init = function()
-			map({ "<leader>g", group = "git", icon = "" })
-		end,
-	},
 	-- Git commands
 	{
 		"tpope/vim-fugitive",
@@ -85,6 +34,9 @@ return {
 			{ "<leader>gl", "<cmd>Git log<cr>", desc = "Git log" },
 			{ "<leader>gs", "<cmd>Git status<cr>", desc = "Git status" },
 		},
+		init = function()
+			map({ "<leader>g", group = "git", icon = "" })
+		end,
 	},
 	{
 		"ruifm/gitlinker.nvim",
