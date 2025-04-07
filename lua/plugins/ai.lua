@@ -43,26 +43,26 @@ local avante_fix_bugs = "Fix the bugs inside the following codes if any"
 local avante_add_tests = "Implement tests for the following code"
 
 return {
-	-- {
-	-- 	"zbirenbaum/copilot.lua",
-	-- 	cmd = "Copilot",
-	-- 	event = "VimEnter",
-	-- 	config = function()
-	-- 		require("copilot").setup({
-	-- 			enabled = true,
-	-- 			suggestion = {
-	-- 				enabled = true,
-	-- 				auto_trigger = true,
-	-- 				keymap = {
-	-- 					accept = "<s-Tab>",
-	-- 					next = "<M-]>",
-	-- 					prev = "<M-[>",
-	-- 					dismiss = "<C-]>",
-	-- 				},
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "VimEnter",
+		config = function()
+			require("copilot").setup({
+				enabled = true,
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					keymap = {
+						accept = "<s-Tab>",
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+			})
+		end,
+	},
 	-- {
 	-- 	"ravitemer/mcphub.nvim",
 	-- 	dependencies = {
@@ -87,17 +87,16 @@ return {
 		version = false,
 		config = function()
 			require("avante").setup({
-				provider = "gemini",
-				cursor_applying_provider = "gemini",
-				auto_suggestions_provider = "gemini",
-				gemini = {
-					-- api_key_name = "cmd:bw get notes gemini-api-key", -- https://github.com/yetone/avante.nvim/issues/1775
-					model = "gemini-2.0-flash",
+				provider = "copilot",
+				cursor_applying_provider = "copilot",
+				copilot = {
+					__inherited_from = "copilot",
+					model = "gemini-2.0-flash-001",
 				},
 				behaviour = {
 					auto_apply_diff_after_generation = false,
 					enable_cursor_planning_mode = true,
-					auto_suggestions = true,
+					auto_suggestions = false,
 				},
 
 				mappings = {
