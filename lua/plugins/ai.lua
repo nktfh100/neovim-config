@@ -43,42 +43,95 @@ local avante_fix_bugs = "Fix the bugs inside the following codes if any"
 local avante_add_tests = "Implement tests for the following code"
 
 return {
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	cmd = "Copilot",
+	-- 	event = "VimEnter",
+	-- 	config = function()
+	-- 		require("copilot").setup({
+	-- 			enabled = true,
+	-- 			suggestion = {
+	-- 				enabled = true,
+	-- 				auto_trigger = true,
+	-- 				keymap = {
+	-- 					accept = "<s-Tab>",
+	-- 					next = "<M-]>",
+	-- 					prev = "<M-[>",
+	-- 					dismiss = "<C-]>",
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
+	-- {
+	-- 	"ravitemer/mcphub.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- 	cmd = "MCPHub",
+	-- 	build = "bundled_build.lua",
+	-- 	config = function()
+	-- 		require("mcphub").setup({
+	-- 			use_bundled_binary = true,
+	-- 			auto_approve = true,
+	-- 			-- config = vim.fn.expand("./mcphub/servers.json"),
+	-- 			extensions = {
+	-- 				avante = {},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
 	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "VimEnter",
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		version = false,
 		config = function()
-			require("copilot").setup({
-				enabled = true,
-				suggestion = {
-					enabled = true,
-					auto_trigger = true,
-					keymap = {
-						accept = "<s-Tab>",
+			require("avante").setup({
+				provider = "gemini",
+				cursor_applying_provider = "gemini",
+				auto_suggestions_provider = "gemini",
+				gemini = {
+					-- api_key_name = "cmd:bw get notes gemini-api-key", -- https://github.com/yetone/avante.nvim/issues/1775
+					model = "gemini-2.0-flash",
+				},
+				behaviour = {
+					auto_apply_diff_after_generation = false,
+					enable_cursor_planning_mode = true,
+					auto_suggestions = true,
+				},
+
+				mappings = {
+					suggestion = {
+						accept = "<S-Tab>",
 						next = "<M-]>",
 						prev = "<M-[>",
 						dismiss = "<C-]>",
 					},
 				},
+
+				-- system_prompt = function()
+				-- 	local hub = require("mcphub").get_hub_instance()
+				-- 	return hub:get_active_servers_prompt()
+				-- end,
+				-- custom_tools = function()
+				-- 	return {
+				-- 		require("mcphub.extensions.avante").mcp_tool(),
+				-- 	}
+				-- end,
+				-- disabled_tools = {
+				-- 	"list_files",
+				-- 	"search_files",
+				-- 	"read_file",
+				-- 	"create_file",
+				-- 	"rename_file",
+				-- 	"delete_file",
+				-- 	"create_dir",
+				-- 	"rename_dir",
+				-- 	"delete_dir",
+				-- 	"bash",
+				-- },
 			})
 		end,
-	},
-	{
-		"yetone/avante.nvim",
-		event = "VeryLazy",
-		version = false,
-		opts = {
-			provider = "copilot",
-			cursor_applying_provider = "copilot",
-			copilot = {
-				__inherited_from = "copilot",
-				model = "claude-3.7-sonnet-thought",
-			},
-			behaviour = {
-				auto_apply_diff_after_generation = false,
-				enable_cursor_planning_mode = true,
-			},
-		},
 		init = function()
 			utils.map({ "<leader>az", group = "avante: ask (templates)", icon = "󰅩", mode = "n" })
 			utils.map({ "<leader>az", group = "avante: edit (templates)", icon = "󰅩", mode = "v" })
@@ -275,20 +328,17 @@ return {
 				"HakonHarnes/img-clip.nvim",
 				event = "VeryLazy",
 				opts = {
-					-- recommended settings
 					default = {
 						embed_image_as_base64 = false,
 						prompt_for_file_name = false,
 						drag_and_drop = {
 							insert_mode = true,
 						},
-						-- required for Windows users
 						use_absolute_path = true,
 					},
 				},
 			},
 			{
-				-- Make sure to set this up properly if you have lazy=true
 				"MeanderingProgrammer/render-markdown.nvim",
 				opts = {
 					file_types = { "markdown", "Avante" },
