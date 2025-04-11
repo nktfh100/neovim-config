@@ -251,6 +251,15 @@ return {
 			end
 		end,
 	},
+	-- Highlight colors
+	{
+		"brenoprata10/nvim-highlight-colors",
+		config = function()
+			require("nvim-highlight-colors").setup({
+				render = "virtual",
+			})
+		end,
+	},
 	--  Display vim motions
 	-- {
 	-- 	"tris203/precognition.nvim",
