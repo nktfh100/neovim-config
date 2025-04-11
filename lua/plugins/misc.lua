@@ -73,6 +73,10 @@ return {
 			require("treesj").setup({})
 		end,
 	},
+	-- jsx, tsx support for Comment.nvim
+	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+	},
 	-- Easy commenting
 	{
 		"numToStr/Comment.nvim",
@@ -82,6 +86,11 @@ return {
 				extra = false,
 			},
 		},
+		config = function()
+			require("Comment").setup({
+				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+			})
+		end,
 	},
 	-- Auto close buffers
 	{
