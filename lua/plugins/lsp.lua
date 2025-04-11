@@ -91,6 +91,21 @@ return {
 				end,
 				capabilities = capabilities,
 			})
+			lspconfig.eslint.setup({
+				capabilities = capabilities,
+				settings = {
+					format = false,
+					codeAction = {
+						disableRuleComment = {
+							enable = false,
+						},
+						showDocumentation = {
+							enable = false,
+						},
+					},
+					quiet = false,
+				},
+			})
 			lspconfig.ts_ls.setup({
 				capabilities = capabilities,
 			})
