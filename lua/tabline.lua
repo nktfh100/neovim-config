@@ -7,21 +7,30 @@ function CustomTabline()
 	local current_tab = fn.tabpagenr()
 
 	for i = 1, total_tabs do
+		local buflist = fn.tabpagebuflist(i)
+		local winnr = fn.tabpagewinnr(i)
+		local bufname = fn.bufname(buflist[winnr])
+		local is_modified = vim.bo[buflist[winnr]].modified
+
 		-- Highlight the current tab
 		if i == current_tab then
-			s = s .. "%#TabLineSel#"
+			if is_modified then
+				s = s .. "%#WarningMsg#"
+			else
+				s = s .. "%#TabLineSel#"
+			end
 		else
-			s = s .. "%#TabLine#"
+			if is_modified then
+				s = s .. "%#WarningMsg#"
+			else
+				s = s .. "%#TabLine#"
+			end
 		end
 
 		-- Tab number for mouse clicks
 		s = s .. "%" .. i .. "T"
 
-		-- Add tab label
-		local buflist = fn.tabpagebuflist(i)
-		local winnr = fn.tabpagewinnr(i)
-		local bufname = fn.bufname(buflist[winnr])
-
+		-- Tab name
 		if bufname ~= "" then
 			local parent_dir = fn.fnamemodify(bufname, ":h:t")
 			local working_dir = fn.fnamemodify(fn.getcwd(), ":t")
@@ -32,6 +41,10 @@ function CustomTabline()
 			end
 		else
 			bufname = "[No Name]"
+		end
+
+		if is_modified then
+			bufname = bufname .. " [+]"
 		end
 
 		s = s .. " " .. bufname .. " "
