@@ -14,6 +14,9 @@ utils.map({
 	{ "p", '"_dP', desc = "Paste Without Yanking", mode = "v" }, -- Paste over currently selected text without yanking it
 	{ "<C-p>", ":pu<CR>", desc = "Paste In Next Line" },
 	{ "gF", "<C-W>gf", desc = "Go To File Under Cursor (New Tab)" },
+	-- Go to next error:
+	{ "<leader>xl", utils.goto_error_then_hint, desc = "Go To Next Error", mode = "n" },
+	{ "<leader>xL", utils.goto_prev_error_then_hint, desc = "Go To Previous Error", mode = "n" },
 	-- Move lines and blocks
 	{ "<A-Up>", ":MoveLine(-1)<CR>", desc = "Move Line Up" },
 	{ "<A-UP>", ":MoveBlock(-1)<CR>", desc = "Move Block Up", mode = "v" },
