@@ -9,3 +9,18 @@ require("tabline")
 vim.cmd("syntax enable")
 vim.cmd("syntax on")
 vim.cmd("colorscheme catppuccin-macchiato")
+
+-- hyprland:
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+	pattern = { "*.hl", "*.conf" }, -- "hypr*.conf"
+	callback = function(event)
+		vim.lsp.start({
+			name = "hyprlang",
+			cmd = { "hyprls" },
+			root_dir = vim.fn.getcwd(),
+		})
+	end,
+})
+vim.filetype.add({
+	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+})
