@@ -89,9 +89,13 @@ return {
 			require("avante").setup({
 				provider = "copilot",
 				cursor_applying_provider = "copilot",
-				copilot = {
-					__inherited_from = "copilot",
-					model = "gemini-2.0-flash-001",
+				providers = {
+					copilot = {
+						__inherited_from = "copilot",
+						extra_request_body = {
+							model = "gemini-2.0-flash-001",
+						},
+					},
 				},
 				behaviour = {
 					auto_apply_diff_after_generation = false,
