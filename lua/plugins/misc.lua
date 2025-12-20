@@ -179,25 +179,25 @@ return {
 	{
 		"junegunn/vim-peekaboo",
 	},
-	{
-		"nick22985/presence.nvim",
-		opts = {
-			show_time = false,
-			debounce_timeout = 10,
-			file_explorer_text = "Browsing files",
-			reading_text = "Reading a file",
-			workspace_text = "Working on something awesome",
-			editing_text = function(fileName)
-				-- Only keep file extension
-				FileExt = fileName:match("^.+(%..+)$")
-				if FileExt == nil then
-					return ""
-				end
-				FileExtWithoutDot = FileExt:sub(2)
-				return string.format("Editing a %s file", FileExtWithoutDot)
-			end,
-		},
-	},
+	-- {
+	-- 	"nick22985/presence.nvim",
+	-- 	opts = {
+	-- 		show_time = false,
+	-- 		debounce_timeout = 10,
+	-- 		file_explorer_text = "Browsing files",
+	-- 		reading_text = "Reading a file",
+	-- 		workspace_text = "Working on something awesome",
+	-- 		editing_text = function(fileName)
+	-- 			-- Only keep file extension
+	-- 			FileExt = fileName:match("^.+(%..+)$")
+	-- 			if FileExt == nil then
+	-- 				return ""
+	-- 			end
+	-- 			FileExtWithoutDot = FileExt:sub(2)
+	-- 			return string.format("Editing a %s file", FileExtWithoutDot)
+	-- 		end,
+	-- 	},
+	-- },
 	-- Time tracking
 	{ "wakatime/vim-wakatime", lazy = false },
 }
