@@ -18,7 +18,6 @@ return {
 			"onsails/lspkind.nvim",
 		},
 		keys = {
-			-- { "K", require("noice.lsp").hover, desc = "Show documentation" },
 			{
 				"H",
 				function()
@@ -35,34 +34,41 @@ return {
 			{ "ge", vim.lsp.buf.declaration, desc = "Go to declaration" },
 		},
 		opts = {
-			-- Disable automatic installation of servers
+			-- Centralized server configurations for vim.lsp.config
 			servers = {
-				lua_ls = {
-					mason = false,
-				},
+				lua_ls = {},
 				nixd = {
-					mason = false,
+					on_init = function(client, _)
+						client.server_capabilities.semanticTokensProvider = nil
+					end,
 				},
-				ts_ls = {
-					mason = false,
+				eslint = {
+					settings = {
+						format = false,
+						codeAction = {
+							disableRuleComment = { enable = false },
+							showDocumentation = { enable = false },
+						},
+						quiet = false,
+					},
 				},
-				tailwindcss = {
-					mason = false,
+				cssls = {},
+				html = {},
+				jsonls = {},
+				ts_ls = {},
+				tailwindcss = {},
+				prismals = {},
+				emmet_language_server = {
+					filetypes = {
+						"css", "html", "javascript", "javascriptreact", "less", "sass", "scss", "typescriptreact",
+					},
 				},
-				emmet_language = {
-					mason = false,
-				},
-				prismals = {
-					mason = false,
-				},
-				gopls = {
-					mason = false,
-				},
+				gopls = {},
 			},
 		},
-
-		config = function()
+		config = function(_, opts)
 			local cmp_lsp = require("cmp_nvim_lsp")
+
 			local capabilities = vim.tbl_deep_extend(
 				"force",
 				{},
@@ -71,99 +77,47 @@ return {
 			)
 
 			require("mason").setup({ ui = { border = "rounded" } })
+
+			local function setup_server(server_name)
+				local server_opts = vim.tbl_deep_extend("force", {
+					capabilities = vim.deepcopy(capabilities),
+				}, opts.servers[server_name] or {})
+
+				vim.lsp.config(server_name, server_opts)
+				vim.lsp.enable(server_name)
+			end
+
 			require("mason-lspconfig").setup({
 				automatic_installation = false,
 				handlers = {
 					function(server_name)
-						require("lspconfig")[server_name].setup({})
+						setup_server(server_name)
 					end,
 				},
 			})
 
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.nixd.setup({
-				on_init = function(client, _)
-					-- Turn off semantic tokens until they're more consistent
-					client.server_capabilities.semanticTokensProvider = nil
-				end,
-				capabilities = capabilities,
-			})
-			lspconfig.eslint.setup({
-				capabilities = capabilities,
-				settings = {
-					format = false,
-					codeAction = {
-						disableRuleComment = {
-							enable = false,
-						},
-						showDocumentation = {
-							enable = false,
-						},
-					},
-					quiet = false,
-				},
-			})
-			lspconfig.cssls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.html.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.jsonls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.ts_ls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.tailwindcss.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.prismals.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.emmet_language_server.setup({
-				filetypes = {
-					"css",
-					"html",
-					"javascript",
-					"javascriptreact",
-					"less",
-					"sass",
-					"scss",
-					"typescriptreact",
-				},
-				capabilities = capabilities,
-			})
-			lspconfig.gopls.setup({
-				capabilities = capabilities,
-			})
+			-- Nixos: Setup servers not managed by Mason
+			for server, _ in pairs(opts.servers) do
+				if not vim.tbl_contains(require("mason-lspconfig").get_installed_servers(), server) then
+					setup_server(server)
+				end
+			end
 
 			utils.map({
 				{ "<leader>r", group = "refactor", icon = "" },
 			})
 
-			-- Setup nvim-cmp for completion
+			-- Setup nvim-cmp
 			local cmp = require("cmp")
-			-- local cmp_select = { behavior = cmp.SelectBehavior.Select }
-
-			-- this is the function that loads the extra snippets to luasnip
-			-- from rafamadriz/friendly-snippets
 			require("luasnip.loaders.from_vscode").lazy_load()
 
 			cmp.setup({
 				sources = {
 					{ name = "path" },
 					{ name = "nvim_lsp" },
-					-- { name = "luasnip", keyword_length = 2 },
 					{ name = "buffer", keyword_length = 3 },
-					-- { name = "cmdline", keyword_length = 3 },
 				},
 				mapping = cmp.mapping.preset.insert({
-					-- ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-					-- ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
 					["<Tab>"] = cmp.mapping.confirm({ select = true }),
 				}),
 				snippet = {
@@ -174,28 +128,13 @@ return {
 				formatting = {
 					format = require("lspkind").cmp_format({
 						mode = "symbol",
-						maxwidth = {
-							menu = 50,
-							abbr = 50,
-						},
+						maxwidth = { menu = 50, abbr = 50 },
 						ellipsis_char = "...",
 						show_labelDetails = true,
-						before = require("tailwind-tools.cmp").lspkind_format,
 					}),
 				},
 			})
 		end,
-	},
-	{
-		"luckasRanarison/tailwind-tools.nvim",
-		name = "tailwind-tools",
-		build = ":UpdateRemotePlugins",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim",
-			"neovim/nvim-lspconfig",
-		},
-		opts = {},
 	},
 	{
 		"ray-x/go.nvim",
@@ -206,7 +145,6 @@ return {
 		},
 		config = function()
 			require("go").setup()
-
 			local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				pattern = "*.go",
@@ -218,7 +156,6 @@ return {
 		end,
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
-		-- build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
 	{
 		"kamykn/spelunker.vim",
