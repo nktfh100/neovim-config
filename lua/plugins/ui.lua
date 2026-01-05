@@ -37,7 +37,7 @@ return {
 	-- UI overhaul
 	{
 		"folke/noice.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		opts = {},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
@@ -126,7 +126,7 @@ return {
 	-- Status line
 	{
 		"nvim-lualine/lualine.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		init = function()
 			require("lualine").setup({
 				options = {
@@ -143,39 +143,7 @@ return {
 		---@type ibl.config
 		opts = {},
 	},
-	-- Transparent background
-	{
-		"xiyaowong/transparent.nvim",
-		lazy = false,
-		config = function()
-			require("transparent").setup({
-				groups = {
-					"Normal",
-					"NormalNC",
-					"Comment",
-					"Constant",
-					"Special",
-					"Identifier",
-					"Statement",
-					"PreProc",
-					"Type",
-					"Underlined",
-					"Todo",
-					"String",
-					"Function",
-					"Conditional",
-					"Repeat",
-					"Operator",
-					"Structure",
-					"LineNr",
-					"NonText",
-					"SignColumn",
-					"CursorLineNr",
-					"EndOfBuffer",
-				},
-			})
-		end,
-	},
+
 	-- Highlight symbols under cursor
 	{
 		"RRethy/vim-illuminate",
@@ -218,7 +186,6 @@ return {
 	-- View definitions, references, and implementations
 	{
 		"dnlhc/glance.nvim",
-		lazy = false,
 		config = function()
 			require("glance").setup({})
 		end,

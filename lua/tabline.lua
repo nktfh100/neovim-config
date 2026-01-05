@@ -6,6 +6,9 @@ function CustomTabline()
 	local total_tabs = fn.tabpagenr("$")
 	local current_tab = fn.tabpagenr()
 
+	local cwd = fn.getcwd()
+	local working_dir = fn.fnamemodify(cwd, ":t")
+
 	for i = 1, total_tabs do
 		local buflist = fn.tabpagebuflist(i)
 		local winnr = fn.tabpagewinnr(i)
@@ -33,7 +36,6 @@ function CustomTabline()
 		-- Tab name
 		if bufname ~= "" then
 			local parent_dir = fn.fnamemodify(bufname, ":h:t")
-			local working_dir = fn.fnamemodify(fn.getcwd(), ":t")
 			bufname = fn.fnamemodify(bufname, ":t") -- File name
 			if parent_dir ~= working_dir then
 				-- Do not display the working directory if its in the current project root
