@@ -86,21 +86,36 @@ return {
 		event = "VeryLazy",
 		opts = { retirementAgeMins = 15 },
 	},
-	-- Search and replace
+	-- Project wide search and replace
 	{
-		"VonHeikemen/searchbox.nvim",
-		dependencies = { "MunifTanjim/nui.nvim" },
+		"MagicDuck/grug-far.nvim",
+		opts = {},
 		keys = {
 			{
 				"<leader>rr",
 				function()
-					require("searchbox").replace()
+					require("grug-far").open()
 				end,
-				desc = "Search And Replace",
+				desc = "Search And Replace (grug-far)",
+			},
+			{
+				"<leader>rw",
+				function()
+					require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
+				end,
+				desc = "Search Word Under Cursor",
+			},
+			{
+				"<leader>rr",
+				function()
+					require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") }, visualSelectionUsedAsSearchInput = true })
+				end,
+				mode = "v",
+				desc = "Search Selection",
 			},
 		},
 		init = function()
-			map({ "<leader>s", group = "Search", icon = "" })
+			map({ "<leader>r", group = "Search/Replace", icon = "" })
 		end,
 	},
 	{
