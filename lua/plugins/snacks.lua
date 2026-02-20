@@ -32,9 +32,18 @@ return {
 		image = { enabled = true },
 		notifier = { enabled = true },
 		picker = { enabled = true },
+		indent = { enabled = true },
+		words = { enabled = true },
 	},
 	keys = {
 		-- File & Text Navigation
+		{
+			"<leader>p",
+			function()
+				Snacks.picker.registers()
+			end,
+			desc = "Registers",
+		},
 		{
 			"<leader>ff",
 			function()

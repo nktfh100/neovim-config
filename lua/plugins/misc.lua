@@ -164,24 +164,6 @@ return {
 			},
 		},
 	},
-	{
-		"atiladefreitas/lazyclip",
-		config = function()
-			require("lazyclip").setup()
-		end,
-		keys = {
-			{
-				"<leader>p",
-				function()
-					require("lazyclip").show_clipboard()
-				end,
-				desc = "Open Clipboard Manager",
-			},
-		},
-	},
-	{
-		"junegunn/vim-peekaboo",
-	},
 	-- {
 	-- 	"nick22985/presence.nvim",
 	-- 	opts = {

@@ -100,25 +100,7 @@ return {
 			})
 		end,
 	},
-	-- Indent lines
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		---@module "ibl"
-		---@type ibl.config
-		opts = {},
-	},
 
-	-- Highlight symbols under cursor
-	{
-		"RRethy/vim-illuminate",
-		event = "BufRead",
-	},
-	-- Highlight on yank
-	{
-		"machakann/vim-highlightedyank",
-		event = "TextYankPost",
-	},
 	-- UI for diagnostics
 	{
 		"folke/trouble.nvim",
