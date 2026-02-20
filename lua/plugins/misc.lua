@@ -12,7 +12,7 @@ return {
 		},
 		keys = {
 			{
-				"<leader>h",
+				"<leader>H",
 				function()
 					require("which-key").show({ global = false })
 				end,
@@ -22,17 +22,45 @@ return {
 	},
 	-- Jump to any character
 	{
-  "folke/flash.nvim",
-  event = "VeryLazy",
-  ---@type Flash.Config
-  opts = {},
-  keys = {
-    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-    { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-  },
-},
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		---@type Flash.Config
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+		},
+	},
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
@@ -92,30 +120,33 @@ return {
 		opts = {},
 		keys = {
 			{
-				"<leader>rr",
+				"<leader>Sr",
 				function()
 					require("grug-far").open()
 				end,
 				desc = "Search And Replace (grug-far)",
 			},
 			{
-				"<leader>rw",
+				"<leader>Sw",
 				function()
 					require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
 				end,
 				desc = "Search Word Under Cursor",
 			},
 			{
-				"<leader>rr",
+				"<leader>Sr",
 				function()
-					require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") }, visualSelectionUsedAsSearchInput = true })
+					require("grug-far").open({
+						prefills = { search = vim.fn.expand("<cword>") },
+						visualSelectionUsedAsSearchInput = true,
+					})
 				end,
 				mode = "v",
 				desc = "Search Selection",
 			},
 		},
 		init = function()
-			map({ "<leader>r", group = "Search/Replace", icon = "" })
+			map({ "<leader>S", group = "Search/Replace", icon = "" })
 		end,
 	},
 	{

@@ -40,6 +40,7 @@ utils.map({
 	-- Tabs:
 	{ "<leader>t", group = "Tabs", icon = "" },
 	{ "<leader>tn", ":tabnew<CR>", desc = "New Tab" },
-	{ "<leader>ta", "gT", desc = "Move Tab Left" },
-	{ "<leader>td", "gt", desc = "Move Tab Right" },
+	-- Todo: better tab movement keys
+	-- { "<leader>ta", "gT", desc = "Move Tab Left" },
+	-- { "<leader>td", "gt", desc = "Move Tab Right" },
 })
