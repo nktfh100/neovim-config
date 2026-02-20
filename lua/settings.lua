@@ -52,7 +52,7 @@ opt.signcolumn = "yes"
 opt.isfname:append("@-@")
 
 -- Set the time in milliseconds to wait before triggering the CursorHold event (useful for plugin responsiveness)
-opt.updatetime = 50
+opt.updatetime = 250
 
 -- Ask for confirmation to save unsaved changes before exiting
 opt.confirm = true
