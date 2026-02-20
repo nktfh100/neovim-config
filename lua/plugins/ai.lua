@@ -15,8 +15,6 @@ local prefill_edit_window = function(request)
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-s>", true, true, true), "v", true)
 end
 
-local avante_grammar_correction = "Correct the text to standard English, but keep any code blocks inside intact."
-local avante_keywords = "Extract the main keywords from the following text"
 local avante_code_readability_analysis = [[
   You must identify any readability issues in the code snippet.
   Some readability issues to consider:
@@ -33,13 +31,7 @@ local avante_code_readability_analysis = [[
   Only list lines with readability issues, in the format <line_num>|<issue and proposed solution>
   If there's no issues with code respond with only: <OK>
 ]]
-local avante_optimize_code = "Optimize the following code"
-local avante_summarize = "Summarize the following text"
-local avante_translate = "Translate this into Chinese, but keep any code blocks inside intact"
 local avante_explain_code = "Explain the following code"
-local avante_complete_code = "Complete the following codes written in " .. vim.bo.filetype
-local avante_add_docstring = "Add docstring to the following codes"
-local avante_fix_bugs = "Fix the bugs inside the following codes if any"
 local avante_add_tests = "Implement tests for the following code"
 
 return {
@@ -63,24 +55,6 @@ return {
 			})
 		end,
 	},
-	-- {
-	-- 	"ravitemer/mcphub.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 	},
-	-- 	cmd = "MCPHub",
-	-- 	build = "bundled_build.lua",
-	-- 	config = function()
-	-- 		require("mcphub").setup({
-	-- 			use_bundled_binary = true,
-	-- 			auto_approve = true,
-	-- 			-- config = vim.fn.expand("./mcphub/servers.json"),
-	-- 			extensions = {
-	-- 				avante = {},
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
 	{
 		"yetone/avante.nvim",
 		event = "VeryLazy",
@@ -89,14 +63,6 @@ return {
 			require("avante").setup({
 				provider = "copilot",
 				cursor_applying_provider = "copilot",
-				providers = {
-					copilot = {
-						__inherited_from = "copilot",
-						extra_request_body = {
-							model = "gemini-2.0-flash-001",
-						},
-					},
-				},
 				behaviour = {
 					auto_apply_diff_after_generation = false,
 					enable_cursor_planning_mode = true,
@@ -111,28 +77,6 @@ return {
 						dismiss = "<C-]>",
 					},
 				},
-
-				-- system_prompt = function()
-				-- 	local hub = require("mcphub").get_hub_instance()
-				-- 	return hub:get_active_servers_prompt()
-				-- end,
-				-- custom_tools = function()
-				-- 	return {
-				-- 		require("mcphub.extensions.avante").mcp_tool(),
-				-- 	}
-				-- end,
-				-- disabled_tools = {
-				-- 	"list_files",
-				-- 	"search_files",
-				-- 	"read_file",
-				-- 	"create_file",
-				-- 	"rename_file",
-				-- 	"delete_file",
-				-- 	"create_dir",
-				-- 	"rename_dir",
-				-- 	"delete_dir",
-				-- 	"bash",
-				-- },
 			})
 		end,
 		init = function()
@@ -146,36 +90,6 @@ return {
 					vim.cmd(":AvanteClear")
 				end,
 				desc = "avante: clear history",
-			},
-			{
-				"<leader>azg",
-				function()
-					require("avante.api").ask({ question = avante_grammar_correction })
-				end,
-				desc = "Grammar Correction(ask)",
-			},
-			{
-				"<leader>azp",
-				function()
-					prefill_edit_window(avante_grammar_correction)
-				end,
-				desc = "Grammar Correction(edit)",
-				mode = { "v" },
-			},
-			{
-				"<leader>azk",
-				function()
-					require("avante.api").ask({ question = avante_keywords })
-				end,
-				desc = "Keywords(ask)",
-			},
-			{
-				"<leader>azy",
-				function()
-					prefill_edit_window(avante_keywords)
-				end,
-				desc = "Keywords(edit)",
-				mode = { "v" },
 			},
 			{
 				"<leader>azl",
@@ -193,51 +107,6 @@ return {
 				mode = { "v" },
 			},
 			{
-				"<leader>azo",
-				function()
-					require("avante.api").ask({ question = avante_optimize_code })
-				end,
-				desc = "Optimize Code(ask)",
-			},
-			{
-				"<leader>azO",
-				function()
-					prefill_edit_window(avante_optimize_code)
-				end,
-				desc = "Optimize Code(edit)",
-				mode = { "v" },
-			},
-			{
-				"<leader>azm",
-				function()
-					require("avante.api").ask({ question = avante_summarize })
-				end,
-				desc = "Summarize text(ask)",
-			},
-			{
-				"<leader>azs",
-				function()
-					prefill_edit_window(avante_summarize)
-				end,
-				desc = "Summarize text(edit)",
-				mode = { "v" },
-			},
-			{
-				"<leader>azn",
-				function()
-					require("avante.api").ask({ question = avante_translate })
-				end,
-				desc = "Translate text(ask)",
-			},
-			{
-				"<leader>azt",
-				function()
-					prefill_edit_window(avante_translate)
-				end,
-				desc = "Translate text(edit)",
-				mode = { "v" },
-			},
-			{
 				"<leader>azx",
 				function()
 					require("avante.api").ask({ question = avante_explain_code })
@@ -250,51 +119,6 @@ return {
 					prefill_edit_window(avante_explain_code)
 				end,
 				desc = "Explain Code(edit)",
-				mode = { "v" },
-			},
-			{
-				"<leader>azc",
-				function()
-					require("avante.api").ask({ question = avante_complete_code })
-				end,
-				desc = "Complete Code(ask)",
-			},
-			{
-				"<leader>azi",
-				function()
-					prefill_edit_window(avante_complete_code)
-				end,
-				desc = "Complete Code(edit)",
-				mode = { "v" },
-			},
-			{
-				"<leader>azd",
-				function()
-					require("avante.api").ask({ question = avante_add_docstring })
-				end,
-				desc = "Docstring(ask)",
-			},
-			{
-				"<leader>azD",
-				function()
-					prefill_edit_window(avante_add_docstring)
-				end,
-				desc = "Docstring(edit)",
-				mode = { "v" },
-			},
-			{
-				"<leader>azb",
-				function()
-					require("avante.api").ask({ question = avante_fix_bugs })
-				end,
-				desc = "Fix Bugs(ask)",
-			},
-			{
-				"<leader>azf",
-				function()
-					prefill_edit_window(avante_fix_bugs)
-				end,
-				desc = "Fix Bugs(edit)",
 				mode = { "v" },
 			},
 			{
@@ -322,7 +146,6 @@ return {
 			--- The below dependencies are optional,
 			"echasnovski/mini.pick", -- for file_selector provider mini.pick
 			"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-			"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
 			"ibhagwan/fzf-lua", -- for file_selector provider fzf
 			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
 			"zbirenbaum/copilot.lua", -- for providers='copilot'

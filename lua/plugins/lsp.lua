@@ -7,15 +7,6 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
-			"onsails/lspkind.nvim",
 		},
 		keys = {
 			{
@@ -67,14 +58,7 @@ return {
 			},
 		},
 		config = function(_, opts)
-			local cmp_lsp = require("cmp_nvim_lsp")
-
-			local capabilities = vim.tbl_deep_extend(
-				"force",
-				{},
-				vim.lsp.protocol.make_client_capabilities(),
-				cmp_lsp.default_capabilities()
-			)
+			local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 			require("mason").setup({ ui = { border = "rounded" } })
 
@@ -105,36 +89,7 @@ return {
 
 			utils.map({
 				{ "<leader>r", group = "refactor", icon = "" },
-			})
-
-			-- Setup nvim-cmp
-			local cmp = require("cmp")
-			require("luasnip.loaders.from_vscode").lazy_load()
-
-			cmp.setup({
-				sources = {
-					{ name = "path" },
-					{ name = "nvim_lsp" },
-					{ name = "buffer", keyword_length = 3 },
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<Tab>"] = cmp.mapping.confirm({ select = true }),
-				}),
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				formatting = {
-					format = require("lspkind").cmp_format({
-						mode = "symbol",
-						maxwidth = { menu = 50, abbr = 50 },
-						ellipsis_char = "...",
-						show_labelDetails = true,
-					}),
-				},
-			})
-		end,
+			})		end,
 	},
 	{
 		"ray-x/go.nvim",

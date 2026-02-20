@@ -10,7 +10,7 @@ return {
 		init = function()
 			require("catppuccin").setup({
 				integrations = {
-					cmp = true,
+					blink_cmp = true,
 					gitsigns = true,
 					notify = true,
 					alpha = true,
