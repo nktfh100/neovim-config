@@ -27,8 +27,7 @@ return {
 				end,
 				desc = "Show diagnostics",
 			},
-			{ "<C-k>", vim.lsp.buf.signature_help, desc = "Interactive signature help" },
-			{ "<leader>rn", vim.lsp.buf.rename, desc = "Interactive rename" },
+					{ "<C-k>", vim.lsp.buf.signature_help, desc = "Interactive signature help" },
 		},
 		opts = {
 			-- Centralized server configurations for vim.lsp.config

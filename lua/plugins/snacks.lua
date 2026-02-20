@@ -7,6 +7,7 @@ return {
 	init = function()
 		utils.map({
 			{ "<leader>n", group = "File tree", icon = "" },
+			{ "gr", group = "LSP", icon = "" },
 		})
 	end,
 	opts = {
@@ -148,7 +149,7 @@ return {
 			desc = "Changed files",
 		},
 
-		-- LSP Navigation (replaces native gd/gr/gi/ge)
+		-- LSP Navigation (uses native neovim 0.11+ keys with snacks pickers)
 		{
 			"gd",
 			function()
@@ -157,14 +158,14 @@ return {
 			desc = "Go to definition",
 		},
 		{
-			"gr",
+			"grr",
 			function()
 				Snacks.picker.lsp_references()
 			end,
 			desc = "Go to references",
 		},
 		{
-			"gi",
+			"gri",
 			function()
 				Snacks.picker.lsp_implementations()
 			end,
@@ -178,18 +179,11 @@ return {
 			desc = "Go to declaration",
 		},
 		{
-			"gt",
+			"grt",
 			function()
 				Snacks.picker.lsp_type_definitions()
 			end,
 			desc = "Go to type definition",
-		},
-		{
-			"<leader>e",
-			function()
-				vim.lsp.buf.code_action()
-			end,
-			desc = "Code actions",
 		},
 
 		-- File Explorer
