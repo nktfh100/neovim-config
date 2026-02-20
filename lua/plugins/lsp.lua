@@ -57,14 +57,22 @@ return {
 				prismals = {},
 				emmet_language_server = {
 					filetypes = {
-						"css", "html", "javascript", "javascriptreact", "less", "sass", "scss", "typescriptreact",
+						"css",
+						"html",
+						"javascript",
+						"javascriptreact",
+						"less",
+						"sass",
+						"scss",
+						"typescriptreact",
 					},
 				},
 				gopls = {},
+				typos_lsp = {},
 			},
 		},
 		config = function(_, opts)
-			local capabilities = require('blink.cmp').get_lsp_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			require("mason").setup({ ui = { border = "rounded" } })
 
@@ -95,7 +103,8 @@ return {
 
 			utils.map({
 				{ "<leader>r", group = "refactor", icon = "" },
-			})		end,
+			})
+		end,
 	},
 	{
 		"ray-x/go.nvim",
@@ -117,9 +126,5 @@ return {
 		end,
 		event = { "CmdlineEnter" },
 		ft = { "go", "gomod" },
-	},
-	{
-		"kamykn/spelunker.vim",
-		config = function() end,
 	},
 }

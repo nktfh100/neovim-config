@@ -69,7 +69,8 @@ opt.splitbelow = true
 -- Open new vertical splits to the right of the current window
 opt.splitright = true
 
-opt.spell = false
+-- Enable spell checking
+opt.spell = true
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
