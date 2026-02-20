@@ -68,7 +68,9 @@ return {
 					enable_cursor_planning_mode = true,
 					auto_suggestions = false,
 				},
-
+				file_selector = {
+					provider = "snacks",
+				},
 				mappings = {
 					suggestion = {
 						accept = "<S-Tab>",
@@ -143,12 +145,8 @@ return {
 			"stevearc/dressing.nvim",
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
-			--- The below dependencies are optional,
-			"echasnovski/mini.pick", -- for file_selector provider mini.pick
-			"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-			"ibhagwan/fzf-lua", -- for file_selector provider fzf
-			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-			"zbirenbaum/copilot.lua", -- for providers='copilot'
+			"nvim-tree/nvim-web-devicons",
+			"zbirenbaum/copilot.lua",
 			{
 				"MeanderingProgrammer/render-markdown.nvim",
 				opts = {

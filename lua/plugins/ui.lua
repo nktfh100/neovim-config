@@ -12,11 +12,9 @@ return {
 				integrations = {
 					blink_cmp = true,
 					gitsigns = true,
-					notify = true,
-					alpha = true,
+					snacks = true,
 					hop = true,
 					mason = true,
-					neotree = true,
 					noice = true,
 					treesitter = true,
 					lsp_trouble = true,
@@ -41,7 +39,6 @@ return {
 		opts = {},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
 		},
 		config = function()
 			require("noice").setup({
@@ -67,38 +64,6 @@ return {
 					},
 				},
 			})
-		end,
-	},
-	-- Greeter
-	{
-		"goolord/alpha-nvim",
-		config = function()
-			local alpha = require("alpha")
-			local alphaDashboard = require("alpha.themes.dashboard")
-
-			alpha.setup(require("alpha.themes.dashboard").config)
-
-			alphaDashboard.section.header.val = {
-				[[                                                    ]],
-				[[ ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ]],
-				[[ ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ]],
-				[[ ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ]],
-				[[ ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ]],
-				[[ ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ]],
-				[[ ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ]],
-				[[                                                    ]],
-			}
-
-			alphaDashboard.section.buttons.val = {
-				alphaDashboard.button("s", "󰸨  Load last session", require("persistence").load),
-				alphaDashboard.button("f", "󰈞  Find file", require("telescope.builtin").find_files),
-				alphaDashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-				alphaDashboard.button("r", "󰷊  Recently used files", require("telescope.builtin").oldfiles),
-				alphaDashboard.button("t", "  Find text", require("telescope.builtin").live_grep),
-				alphaDashboard.button("q", "󰩈  Quit Neovim", ":qa<CR>"),
-			}
-
-			require("alpha").setup(alphaDashboard.config)
 		end,
 	},
 	-- Highlight TODO comments
@@ -179,27 +144,9 @@ return {
 		},
 		init = function()
 			utils.map({
-				{ "<leader>x", group = "Trouble", icon = "" },
+				{ "<leader>x", group = "Trouble", icon = "" },
 			})
 		end,
-	},
-	-- View definitions, references, and implementations
-	{
-		"dnlhc/glance.nvim",
-		config = function()
-			require("glance").setup({})
-		end,
-		init = function()
-			utils.map({
-				{ "<leader>d", group = "Glance", icon = "" },
-			})
-		end,
-		keys = {
-			{ "<leader>dd", "<CMD>Glance definitions<CR>", desc = "Glance definitions" },
-			{ "<leader>dr", "<CMD>Glance references<CR>", desc = "Glance references" },
-			{ "<leader>di", "<CMD>Glance implementations<CR>", desc = "Glance implementations" },
-			{ "<leader>dt", "<CMD>Glance type_definitions<CR>", desc = "Glance type definitions" },
-		},
 	},
 	-- Icons
 	{

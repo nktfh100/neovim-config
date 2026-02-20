@@ -18,11 +18,6 @@ return {
 			},
 			{ "<C-k>", vim.lsp.buf.signature_help, desc = "Interactive signature help" },
 			{ "<leader>rn", vim.lsp.buf.rename, desc = "Interactive rename" },
-			{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
-			{ "gr", vim.lsp.buf.references, desc = "Go to references" },
-			{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
-			{ "gI", "<cmd>tab split | lua vim.lsp.buf.implementation()<CR>", desc = "Go To implementation In New Tab" },
-			{ "ge", vim.lsp.buf.declaration, desc = "Go to declaration" },
 		},
 		opts = {
 			-- Centralized server configurations for vim.lsp.config
