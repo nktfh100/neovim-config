@@ -22,7 +22,7 @@ opt.relativenumber = true
 opt.clipboard = "unnamedplus"
 
 opt.tabstop = 2 -- Set width of a tab character
-opt.softtabstop = 4 -- Set width of a soft tabstop (number of spaces used when pressing Tab)
+opt.softtabstop = 2 -- Set width of a soft tabstop (number of spaces used when pressing Tab)
 opt.shiftwidth = 2 -- Set width of an auto-indent
 opt.expandtab = false -- Use tabs instead of spaces
 
