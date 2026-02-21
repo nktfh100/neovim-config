@@ -9,6 +9,8 @@ function CustomTabline()
 	local cwd = fn.getcwd()
 	local working_dir = fn.fnamemodify(cwd, ":t")
 
+	local hint_letters = "asdfghjklqwertyuiopzxcvbnm"
+
 	for i = 1, total_tabs do
 		local buflist = fn.tabpagebuflist(i)
 		local winnr = fn.tabpagewinnr(i)
@@ -49,7 +51,13 @@ function CustomTabline()
 			bufname = bufname .. " [+]"
 		end
 
-		s = s .. " " .. bufname .. " "
+		local display_text = " " .. bufname .. " "
+		if vim.g.tabline_show_hints and i <= #hint_letters then
+			local letter = hint_letters:sub(i, i)
+			display_text = " [" .. letter:upper() .. "] " .. bufname .. " "
+		end
+
+		s = s .. display_text
 	end
 
 	-- Add filler and a close button if there are multiple tabs

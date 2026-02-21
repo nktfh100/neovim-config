@@ -1,5 +1,18 @@
-local function map(...)
-	return require("which-key").add(...)
+local function map(mappings)
+	local ok, wk = pcall(require, "which-key")
+	if ok then
+		return wk.add(mappings)
+	end
+	-- Fallback for VSCode
+	for _, mapping in ipairs(mappings) do
+		local lhs = mapping[1]
+		local rhs = mapping[2]
+		if lhs and rhs and type(lhs) == "string" and (type(rhs) == "string" or type(rhs) == "function") then
+			local mode = mapping.mode or "n"
+			local opts = { desc = mapping.desc }
+			vim.keymap.set(mode, lhs, rhs, opts)
+		end
+	end
 end
 
 local function pos_equal(p1, p2)

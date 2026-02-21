@@ -1,5 +1,9 @@
 local map = require("utils").map
 
+if vim.g.vscode then
+	return {}
+end
+
 return {
 	-- Diff viewer and merge tool
 	{

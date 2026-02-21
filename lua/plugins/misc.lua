@@ -3,6 +3,7 @@ local map = require("utils").map
 return {
 	{
 		"folke/which-key.nvim",
+		cond = not vim.g.vscode,
 		dependencies = {
 			"echasnovski/mini.nvim",
 			"nvim-tree/nvim-web-devicons",
@@ -111,12 +112,14 @@ return {
 	-- Auto close buffers
 	{
 		"chrisgrieser/nvim-early-retirement",
+		cond = not vim.g.vscode,
 		event = "VeryLazy",
 		opts = { retirementAgeMins = 15 },
 	},
 	-- Project wide search and replace
 	{
 		"MagicDuck/grug-far.nvim",
+		cond = not vim.g.vscode,
 		opts = {},
 		keys = {
 			{
@@ -151,11 +154,12 @@ return {
 	},
 	{
 		"folke/persistence.nvim",
+		cond = not vim.g.vscode,
 		event = "BufReadPre",
 		opts = {},
 	},
 	-- Scoped buffers
-	{ "tiagovla/scope.nvim" },
+	{ "tiagovla/scope.nvim", cond = not vim.g.vscode },
 	-- Surround text objects
 	{
 		"echasnovski/mini.surround",
@@ -182,6 +186,7 @@ return {
 	-- Gitignore generator
 	{
 		"wintermute-cell/gitignore.nvim",
+		cond = not vim.g.vscode,
 		config = function()
 			require("gitignore")
 		end,
@@ -215,5 +220,5 @@ return {
 	-- 	},
 	-- },
 	-- Time tracking
-	{ "wakatime/vim-wakatime", lazy = false },
+	{ "wakatime/vim-wakatime", lazy = false, cond = not vim.g.vscode },
 }

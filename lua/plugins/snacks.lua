@@ -2,17 +2,40 @@ local utils = require("utils")
 
 return {
 	"folke/snacks.nvim",
+	cond = not vim.g.vscode,
 	priority = 1000,
 	lazy = false,
 	init = function()
 		utils.map({
-			{ "<leader>n", group = "File tree", icon = "" },
-			{ "gr", group = "LSP", icon = "" },
+			{ "<leader>n", group = "File tree", icon = "󰙅" },
+			{ "gr", group = "LSP", icon = "󰠱" },
 		})
 	end,
 	opts = {
 		dashboard = {
 			enabled = true,
+			sections = {
+				{ section = "header" },
+				function()
+					local current_locale = os.setlocale(nil, "time")
+					os.setlocale("C", "time")
+					local date = os.date("%A, %B %d, %Y")
+					local time = os.date("%H:%M:%S")
+					os.setlocale(current_locale, "time")
+					return {
+						text = {
+							{ "󰃭 ", hl = "SnacksDashboardIcon" },
+							{ date, hl = "SnacksDashboardDesc" },
+							{ "  󱑒 ", hl = "SnacksDashboardIcon" },
+							{ time, hl = "SnacksDashboardDesc" },
+						},
+						align = "center",
+						padding = 1,
+					}
+				end,
+				{ section = "keys", gap = 1, padding = 1 },
+				{ section = "startup" },
+			},
 			preset = {
 				keys = {
 					{
@@ -42,6 +65,25 @@ return {
 		indent = { enabled = true },
 		words = { enabled = true },
 	},
+	config = function(_, opts)
+		require("snacks").setup(opts)
+
+		-- Update dashboard clock periodically
+		vim.api.nvim_create_autocmd("User", {
+			pattern = "SnacksDashboardOpened",
+			callback = function(ev)
+				local timer = vim.uv.new_timer()
+				timer:start(1000, 1000, vim.schedule_wrap(function()
+					if vim.api.nvim_buf_is_valid(ev.buf) and vim.bo[ev.buf].filetype == "snacks_dashboard" then
+						require("snacks").dashboard.update()
+					else
+						timer:stop()
+						timer:close()
+					end
+				end))
+			end,
+		})
+	end,
 	keys = {
 		-- File & Text Navigation
 		{

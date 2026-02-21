@@ -1,5 +1,9 @@
 local utils = require("utils")
 
+if vim.g.vscode then
+	return {}
+end
+
 return {
 	-- Theme
 	{
@@ -92,7 +96,7 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
-		init = function()
+		config = function()
 			require("lualine").setup({
 				options = {
 					theme = "catppuccin",
