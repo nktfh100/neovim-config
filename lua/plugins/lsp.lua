@@ -27,7 +27,13 @@ return {
 				end,
 				desc = "Show diagnostics",
 			},
-					{ "<C-k>", vim.lsp.buf.signature_help, desc = "Interactive signature help" },
+			{
+				"<C-k>",
+				function()
+					vim.lsp.buf.signature_help()
+				end,
+				desc = "Signature help",
+			},
 		},
 		opts = {
 			-- Centralized server configurations for vim.lsp.config

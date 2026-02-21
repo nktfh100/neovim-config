@@ -31,7 +31,13 @@ return {
 		},
 		explorer = { enabled = true },
 		image = { enabled = true },
-		notifier = { enabled = true },
+		notifier = {
+			enabled = true,
+			-- Suppress weird "No information available" LSP hover notification
+			filter = function(notif)
+				return notif.msg ~= "No information available"
+			end,
+		},
 		picker = { enabled = true },
 		indent = { enabled = true },
 		words = { enabled = true },
