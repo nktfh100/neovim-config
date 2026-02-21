@@ -156,6 +156,106 @@ return {
 			})
 		end,
 	},
+	-- Smooth scrolling
+	{
+		"karb94/neoscroll.nvim",
+		config = function()
+			local neoscroll = require("neoscroll")
+
+			-- Helper to check if macro is being recorded
+			local function is_recording()
+				return vim.fn.reg_recording() ~= ""
+			end
+
+			-- Helper to execute native scroll command
+			local function native_scroll(key)
+				local keys = vim.api.nvim_replace_termcodes(key, true, false, true)
+				vim.api.nvim_feedkeys(keys, "n", false)
+			end
+
+			neoscroll.setup({
+				mappings = {}, -- Disable default mappings
+				hide_cursor = true,
+				stop_eof = true,
+				respect_scrolloff = false,
+				cursor_scrolls_alone = true,
+				duration_multiplier = 1.0,
+				easing = "quadratic",
+			})
+
+			-- Custom mappings that disable scrolling during macro recording
+			local keymap = {
+				["<C-u>"] = function()
+					if is_recording() then
+						native_scroll("<C-u>")
+					else
+						neoscroll.ctrl_u({ duration = 250 })
+					end
+				end,
+				["<C-d>"] = function()
+					if is_recording() then
+						native_scroll("<C-d>")
+					else
+						neoscroll.ctrl_d({ duration = 250 })
+					end
+				end,
+				["<C-b>"] = function()
+					if is_recording() then
+						native_scroll("<C-b>")
+					else
+						neoscroll.ctrl_b({ duration = 450 })
+					end
+				end,
+				["<C-f>"] = function()
+					if is_recording() then
+						native_scroll("<C-f>")
+					else
+						neoscroll.ctrl_f({ duration = 450 })
+					end
+				end,
+				["<C-y>"] = function()
+					if is_recording() then
+						native_scroll("<C-y>")
+					else
+						neoscroll.scroll(-0.1, { move_cursor = false, duration = 100 })
+					end
+				end,
+				["<C-e>"] = function()
+					if is_recording() then
+						native_scroll("<C-e>")
+					else
+						neoscroll.scroll(0.1, { move_cursor = false, duration = 100 })
+					end
+				end,
+				["zt"] = function()
+					if is_recording() then
+						native_scroll("zt")
+					else
+						neoscroll.zt({ half_win_duration = 250 })
+					end
+				end,
+				["zz"] = function()
+					if is_recording() then
+						native_scroll("zz")
+					else
+						neoscroll.zz({ half_win_duration = 250 })
+					end
+				end,
+				["zb"] = function()
+					if is_recording() then
+						native_scroll("zb")
+					else
+						neoscroll.zb({ half_win_duration = 250 })
+					end
+				end,
+			}
+
+			local modes = { "n", "v", "x" }
+			for key, func in pairs(keymap) do
+				vim.keymap.set(modes, key, func)
+			end
+		end,
+	},
 	--  Display vim motions
 	-- {
 	-- 	"tris203/precognition.nvim",
