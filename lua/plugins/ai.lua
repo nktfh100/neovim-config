@@ -63,6 +63,11 @@ return {
 			require("avante").setup({
 				provider = "copilot",
 				cursor_applying_provider = "copilot",
+				providers = {
+					copilot = {
+						model = "claude-sonnet-4.6",
+					},
+				},
 				behaviour = {
 					auto_apply_diff_after_generation = false,
 					enable_cursor_planning_mode = true,
@@ -72,6 +77,7 @@ return {
 					provider = "snacks",
 				},
 				mappings = {
+					zen_mode = "<leader>aZ",
 					suggestion = {
 						accept = "<S-Tab>",
 						next = "<M-]>",
@@ -131,7 +137,7 @@ return {
 				desc = "Add Tests(ask)",
 			},
 			{
-				"<leader>azT",
+				"<leader>azt",
 				function()
 					prefill_edit_window(avante_add_tests)
 				end,
