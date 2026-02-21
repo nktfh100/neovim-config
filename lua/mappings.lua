@@ -5,6 +5,7 @@ utils.map({
 	{ "<C-s>", "<ESC> :update <CR>", desc = "Exit Insert Mode And Save File", mode = "i" },
 	{ "<C-s>", ":update<CR>", desc = "Save File" },
 	{ "x", '"_x', desc = "Delete Char Without Yanking" },
+	{ "c", '"_c', desc = "Change Without Yanking", mode = { "n", "v" } },
 	{ "<S-Tab>", "<<", desc = "Indent Left" },
 	{ "<Tab>", ">gv", desc = "Indent Right", mode = "v" }, -- Indent without deselecting
 	{ "<S-Tab>", "<gv", desc = "Indent Left", mode = "v" },
