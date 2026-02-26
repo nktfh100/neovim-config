@@ -65,25 +65,43 @@ return {
 		version = false,
 		config = function()
 			require("avante").setup({
-				provider = "copilot",
-				cursor_applying_provider = "copilot",
+				provider = "minimax",
+				-- auto_suggestions_provider = "minimax-fast",
 				providers = {
-					copilot = {
-						model = "claude-sonnet-4.6",
+					minimax = {
+						__inherited_from = "openai",
+						endpoint = "https://www.minimax.io/v1",
+						model = "MiniMax-M2.5",
+						api_key_name = "cmd:cat /run/secrets/minimax_api_key",
+						timeout = 30000,
+						context_window = 1000000,
+					},
+					["minimax-fast"] = {
+						__inherited_from = "openai",
+						endpoint = "https://www.minimax.io/v1",
+						model = "MiniMax-M2.1",
+						api_key_name = "cmd:cat /run/secrets/minimax_api_key",
+						timeout = 10000,
+						context_window = 1000000,
 					},
 				},
 				behaviour = {
 					auto_apply_diff_after_generation = false,
 					enable_cursor_planning_mode = true,
-					auto_suggestions = false,
+					auto_suggestions = true,
+				},
+				suggestion = {
+					debounce = 200,
+					throttle = 200,
 				},
 				file_selector = {
 					provider = "snacks",
 				},
+
 				mappings = {
 					zen_mode = "<leader>aZ",
 					suggestion = {
-						accept = "<S-Tab>",
+						accept = "<Tab>",
 						next = "<M-]>",
 						prev = "<M-[>",
 						dismiss = "<C-]>",
@@ -155,7 +173,6 @@ return {
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
 			"nvim-tree/nvim-web-devicons",
-			"zbirenbaum/copilot.lua",
 			{
 				"MeanderingProgrammer/render-markdown.nvim",
 				opts = {

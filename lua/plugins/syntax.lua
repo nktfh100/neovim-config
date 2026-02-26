@@ -37,5 +37,11 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		cond = not vim.g.vscode,
+		config = function()
+			require("treesitter-context").setup({
+				max_lines = 4,
+				trim_scope = "inner",
+			})
+		end,
 	},
 }
