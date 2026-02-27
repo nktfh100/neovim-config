@@ -12,6 +12,7 @@ return {
 		})
 	end,
 	opts = {
+		terminal = { enabled = true },
 		dashboard = {
 			enabled = true,
 			sections = {
