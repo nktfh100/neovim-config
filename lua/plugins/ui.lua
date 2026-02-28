@@ -13,6 +13,7 @@ return {
 		lazy = false,
 		init = function()
 			require("catppuccin").setup({
+				transparent_background = true,
 				integrations = {
 					blink_cmp = true,
 					gitsigns = true,
