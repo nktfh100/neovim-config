@@ -1,20 +1,14 @@
 vim.g.mapleader = " "
-if not vim.g.vscode then
-	vim.opt.laststatus = 3
-end
+vim.opt.laststatus = 3
 vim.g.maplocalleader = "\\"
 
 require("settings")
 require("lazy_init")
 require("mappings")
-if not vim.g.vscode then
-	require("tabline")
-end
+require("tabline")
 
 -- Set theme
-if not vim.g.vscode then
-	vim.cmd("colorscheme catppuccin-macchiato")
-end
+vim.cmd("colorscheme catppuccin-macchiato")
 
 -- hyprland:
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {

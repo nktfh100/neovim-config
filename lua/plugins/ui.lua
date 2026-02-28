@@ -1,8 +1,5 @@
 local utils = require("utils")
 
-if vim.g.vscode then
-	return {}
-end
 
 return {
 	-- Theme

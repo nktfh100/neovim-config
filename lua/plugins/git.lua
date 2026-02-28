@@ -1,8 +1,5 @@
 local map = require("utils").map
 
-if vim.g.vscode then
-	return {}
-end
 
 return {
 	-- Diff viewer and merge tool
@@ -56,9 +53,13 @@ return {
 				map("n", "<leader>gu", gs.undo_stage_hunk, { desc = "Undo Stage Hunk" })
 				map("n", "<leader>gw", gs.toggle_deleted, { desc = "Toggle Deleted" })
 				map("n", "<leader>gp", gs.preview_hunk, { desc = "Preview Hunk" })
-				map("n", "<leader>gL", function() gs.blame_line({ full = true }) end, { desc = "Blame Line" })
+				map("n", "<leader>gL", function()
+					gs.blame_line({ full = true })
+				end, { desc = "Blame Line" })
 				map("n", "<leader>gD", gs.diffthis, { desc = "Diff This" })
-				map("n", "<leader>ub", function() gs.setup({ current_line_blame = true }) end, { desc = "Toggle Line Blame" })
+				map("n", "<leader>ub", function()
+					gs.setup({ current_line_blame = true })
+				end, { desc = "Toggle Line Blame" })
 			end,
 		},
 	},

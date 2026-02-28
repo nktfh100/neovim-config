@@ -34,9 +34,6 @@ local avante_code_readability_analysis = [[
 local avante_explain_code = "Explain the following code"
 local avante_add_tests = "Implement tests for the following code"
 
-if vim.g.vscode then
-	return {}
-end
 
 return {
 	{

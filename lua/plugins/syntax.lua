@@ -19,7 +19,7 @@ return {
 				},
 				auto_install = true,
 				sync_install = true,
-				highlight = { enable = not vim.g.vscode },
+				highlight = { enable = true },
 				indent = { enable = true },
 				incremental_selection = {
 					enable = true,
@@ -36,7 +36,6 @@ return {
 	-- Show sticky context for off-screen scope
 	{
 		"nvim-treesitter/nvim-treesitter-context",
-		cond = not vim.g.vscode,
 		config = function()
 			require("treesitter-context").setup({
 				max_lines = 4,
