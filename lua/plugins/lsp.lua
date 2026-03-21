@@ -1,6 +1,5 @@
 local utils = require("utils")
 
-
 return {
 	{
 		"folke/lazydev.nvim",
@@ -79,8 +78,25 @@ return {
 		},
 		config = function(_, opts)
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			local lsp_start_group = vim.api.nvim_create_augroup("UserLspStart", { clear = true })
 
 			require("mason").setup({ ui = { border = "rounded" } })
+
+			-- Avoid attaching LSP to artificial URI buffers (diff/fugitive).
+			-- https://github.com/neovim/neovim/issues/33061#issuecomment-2754364821
+			local function should_start_lsp(bufnr)
+				local buftype = vim.bo[bufnr].buftype
+				if buftype ~= "" then
+					return false
+				end
+
+				local bufname = vim.api.nvim_buf_get_name(bufnr)
+				if bufname == "" then
+					return false
+				end
+
+				return not bufname:match("^[%w+.-]+://")
+			end
 
 			local function setup_server(server_name)
 				local server_opts = vim.tbl_deep_extend("force", {
@@ -88,7 +104,26 @@ return {
 				}, opts.servers[server_name] or {})
 
 				vim.lsp.config(server_name, server_opts)
-				vim.lsp.enable(server_name)
+
+				local filetypes = vim.lsp.config[server_name].filetypes
+				if not filetypes or vim.tbl_isempty(filetypes) then
+					return
+				end
+
+				vim.api.nvim_create_autocmd("FileType", {
+					group = lsp_start_group,
+					pattern = filetypes,
+					callback = function(args)
+						if not should_start_lsp(args.buf) then
+							return
+						end
+
+						vim.api.nvim_buf_call(args.buf, function()
+							vim.lsp.start(vim.lsp.config[server_name])
+						end)
+					end,
+					desc = string.format("Start %s for file buffers", server_name),
+				})
 			end
 
 			require("mason-lspconfig").setup({
