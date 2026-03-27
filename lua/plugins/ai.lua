@@ -34,7 +34,6 @@ local avante_code_readability_analysis = [[
 local avante_explain_code = "Explain the following code"
 local avante_add_tests = "Implement tests for the following code"
 
-
 return {
 	{
 		"zbirenbaum/copilot.lua",
@@ -95,7 +94,7 @@ return {
 			vim.o.autoread = true
 
 			vim.keymap.set({ "n", "x" }, "<leader>aq", function()
-				require("opencode").ask()
+				require("opencode").ask("", { submit = true })
 			end, { desc = "Quick prompt opencode…" })
 
 			vim.keymap.set({ "n", "x" }, "<leader>aQ", function()
@@ -114,7 +113,7 @@ return {
 				return require("opencode").operator("@this ")
 			end, { desc = "Add range to opencode", expr = true })
 
-			vim.keymap.set("n", "<leader>aO", function()
+			vim.keymap.set("n", "<leader>ao", function()
 				return require("opencode").operator("@this ") .. "_"
 			end, { desc = "Add line to opencode", expr = true })
 
