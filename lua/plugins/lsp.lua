@@ -36,14 +36,9 @@ return {
 			},
 		},
 		opts = {
-			-- Centralized server configurations for vim.lsp.config
 			servers = {
 				lua_ls = {},
-				nixd = {
-					on_init = function(client, _)
-						client.server_capabilities.semanticTokensProvider = nil
-					end,
-				},
+				nixd = {},
 				eslint = {
 					settings = {
 						format = false,
@@ -78,25 +73,19 @@ return {
 		},
 		config = function(_, opts)
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
-			local lsp_start_group = vim.api.nvim_create_augroup("UserLspStart", { clear = true })
 
 			require("mason").setup({ ui = { border = "rounded" } })
 
-			-- Avoid attaching LSP to artificial URI buffers (diff/fugitive).
-			-- https://github.com/neovim/neovim/issues/33061#issuecomment-2754364821
-			local function should_start_lsp(bufnr)
-				local buftype = vim.bo[bufnr].buftype
-				if buftype ~= "" then
-					return false
-				end
-
-				local bufname = vim.api.nvim_buf_get_name(bufnr)
-				if bufname == "" then
-					return false
-				end
-
-				return not bufname:match("^[%w+.-]+://")
-			end
+			-- Disable nixd semantic tokens
+			-- https://github.com/neovim/neovim/issues/33061
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if client and client.name == "nixd" then
+						client.server_capabilities.semanticTokensProvider = nil
+					end
+				end,
+			})
 
 			local function setup_server(server_name)
 				local server_opts = vim.tbl_deep_extend("force", {
@@ -104,26 +93,7 @@ return {
 				}, opts.servers[server_name] or {})
 
 				vim.lsp.config(server_name, server_opts)
-
-				local filetypes = vim.lsp.config[server_name].filetypes
-				if not filetypes or vim.tbl_isempty(filetypes) then
-					return
-				end
-
-				vim.api.nvim_create_autocmd("FileType", {
-					group = lsp_start_group,
-					pattern = filetypes,
-					callback = function(args)
-						if not should_start_lsp(args.buf) then
-							return
-						end
-
-						vim.api.nvim_buf_call(args.buf, function()
-							vim.lsp.start(vim.lsp.config[server_name])
-						end)
-					end,
-					desc = string.format("Start %s for file buffers", server_name),
-				})
+				vim.lsp.enable(server_name)
 			end
 
 			require("mason-lspconfig").setup({
@@ -143,7 +113,7 @@ return {
 			end
 
 			utils.map({
-				{ "<leader>r", group = "refactor", icon = "" },
+				{ "<leader>r", group = "refactor", icon = "" },
 			})
 		end,
 	},
