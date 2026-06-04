@@ -2,24 +2,27 @@ local map = require("utils").map
 
 
 return {
-	-- Diff viewer and merge tool
+	-- VSCode-style diff viewer (uses VSCode's diff algorithm)
 	{
-		"sindrets/diffview.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+		"esmuellert/codediff.nvim",
+		cmd = "CodeDiff",
 		keys = {
-			{ "<leader>gv", "<cmd>DiffviewOpen<cr>", desc = "Open diff view" },
-			{ "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "Open file history" },
+			{ "<leader>gv", "<cmd>CodeDiff<cr>", desc = "Open diff view" },
+			{ "<leader>gh", "<cmd>CodeDiff history %<cr>", desc = "Open file history" },
 		},
 		opts = {
-			-- enhanced_diff_hl = true,
-			-- view = {
-			-- 	default = { layout = "diff2_horizontal" },
-			-- 	merge_tool = {
-			-- 		layout = "diff4_mixed",
-			-- 		disable_diagnostics = true,
-			-- 	},
-			-- },
+			diff = {
+				layout = "side-by-side",
+				compute_moves = true,
+			},
+			keymaps = {
+				view = {
+					toggle_explorer = "<leader>E",
+					stage_hunk = "<leader>ga",
+					unstage_hunk = "<leader>gu",
+					discard_hunk = "<leader>gr",
+				},
+			},
 		},
 	},
 	{
