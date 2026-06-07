@@ -18,6 +18,7 @@ return {
 			keymaps = {
 				view = {
 					toggle_explorer = "<leader>E",
+					toggle_stage = "s",
 					stage_hunk = "<leader>ga",
 					unstage_hunk = "<leader>gu",
 					discard_hunk = "<leader>gr",
