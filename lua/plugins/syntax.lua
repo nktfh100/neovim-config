@@ -2,9 +2,16 @@ return {
 	{
 		-- Syntax highlighting
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false,
 		build = ":TSUpdate",
+	},
+	-- Brings back highlight/indent/incremental_selection modules removed from the main branch
+	{
+		"MeanderingProgrammer/treesitter-modules.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		config = function()
-			require("nvim-treesitter.configs").setup({
+			require("treesitter-modules").setup({
 				ensure_installed = {
 					"lua",
 					"vim",
@@ -16,6 +23,7 @@ return {
 					"bash",
 					"css",
 					"tsx",
+					"regex",
 				},
 				auto_install = true,
 				sync_install = true,
